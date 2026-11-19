@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Lunch Planner</title>
+<meta name="description" content="Explore sample meal prep quantities for a campus cafeteria.">
+<style>
+* { box-sizing:border-box }
+body { margin:0; font: 1rem/1.55 system-ui,sans-serif; background:#f2f6ef; color:#192d24 }
+main { max-width:63rem; margin:auto; padding:clamp(1.25rem,6vw,5rem) }
+header { border-top:4px solid #315c46; padding-top:1rem }
+h1 { font: 500 clamp(2.6rem,8vw,5.6rem)/1 Georgia,serif; letter-spacing:-.05em; margin:1.6rem 0 1rem }
+p { color:#40564a; max-width:36rem }
+section { margin-top:2rem; padding:clamp(1rem,4vw,2rem); background:white; border:1px solid #cddbd0; border-radius:1rem }
+h2 { margin:0 0 1rem; font-size:1.25rem }
+button { font:inherit; color:inherit; background:#eef4ed; border:1px solid #cddbd0; border-radius:.5rem; padding:.55rem .9rem; cursor:pointer; margin:0 .25rem .35rem 0 }
+button[aria-pressed="true"] { background:#254a38; color:white; border-color:#254a38 }
+button:focus-visible { outline:3px solid #b0571a; outline-offset:2px }
+dl { margin:1rem 0 0 }
+dl div { display:flex; justify-content:space-between; gap:1rem; padding:.8rem 0; border-top:1px solid #e1e9e1 }
+dd { margin:0; font-weight:700; white-space:nowrap }
+small { display:block; margin-top:1rem; color:#40564a; font-size:.875rem }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Campus Lunch Planner</h1>
+<p>Pick a day to see how many portions a campus cafeteria might prepare for lunch.</p>
+</header>
+<section aria-labelledby="plan-title">
+<h2 id="plan-title">Meal prep plan</h2>
+<div role="group" aria-label="Day of the week">
+<button type="button" aria-pressed="true" data-day="0">Mon</button>
+<button type="button" aria-pressed="false" data-day="1">Tue</button>
+<button type="button" aria-pressed="false" data-day="2">Wed</button>
+<button type="button" aria-pressed="false" data-day="3">Thu</button>
+<button type="button" aria-pressed="false" data-day="4">Fri</button>
+</div>
+<dl aria-live="polite">
+<div><dt>Chicken rice bowl</dt><dd>85 portions</dd></div>
+<div><dt>Chickpea wrap</dt><dd>42 portions</dd></div>
+<div><dt>Pasta primavera</dt><dd>56 portions</dd></div>
+</dl>
+<small>Sample data for demonstration.</small>
+</section>
+</main>
+<script>
+const portions = [[85, 42, 56], [94, 48, 62], [100, 51, 68], [90, 47, 60], [67, 35, 45]];
+const dayButtons = document.querySelectorAll('button[data-day]');
+const portionLabels = document.querySelectorAll('dd');
+
+for (const button of dayButtons) {
+  button.addEventListener('click', () => {
+    for (const dayButton of dayButtons) {
+      dayButton.setAttribute('aria-pressed', String(dayButton === button));
+    }
+
+    portions[Number(button.dataset.day)].forEach((count, index) => {
+      portionLabels[index].textContent = count + ' portions';
+    });
+  });
+}
+</script>
+</body>
+</html>
